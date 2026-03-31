@@ -31,8 +31,8 @@ import logging
 import os
 import re
 
-# 修改：使用绝对路径指向 edict-main 项目
-EDICT_HOME = pathlib.Path(r'D:\code\原始项目\edict-main')
+# 使用相对于脚本的路径
+EDICT_HOME = pathlib.Path(__file__).resolve().parent.parent
 TASKS_FILE = EDICT_HOME / 'data' / 'tasks_source.json'
 REFRESH_SCRIPT = EDICT_HOME / 'scripts' / 'refresh_live_data.py'
 

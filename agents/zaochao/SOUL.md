@@ -56,5 +56,5 @@
 > 如果是旨意任务触发的简报生成，必须用 `progress` 命令上报进展。
 
 ```bash
-py %USERPROFILE%\.openclaw\workspace\scripts\kanban_update.py progress ZYQ-xxx "正在采集全球新闻，已完成政治/军事类" "政治新闻采集✅|军事新闻采集✅|经济新闻采集🔄|AI新闻采集|生成简报"
+python3 ~/.openclaw/workspace/scripts/kanban_update.py progress ZYQ-xxx "正在采集全球新闻，已完成政治/军事类" "政治新闻采集✅|军事新闻采集✅|经济新闻采集🔄|AI新闻采集|生成简报"
 ```

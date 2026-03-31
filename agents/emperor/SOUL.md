@@ -37,17 +37,25 @@
 ## 看板操作
 
 ```bash
-# 创建任务
-py %USERPROFILE%\.openclaw\workspace\scripts\kanban_update.py create ZYQ-YYYYMMDD-NNN "任务标题" Zhongshu 中书省 中书令
+# 创建任务 (Windows)
+python3 ~/.openclaw/workspace/scripts/kanban_update.py create ZYQ-YYYYMMDD-NNN "任务标题" Zhongshu 中书省 中书令
+# 创建任务 (macOS/Linux)
+python3 ~/.openclaw/workspace/scripts/kanban_update.py create ZYQ-YYYYMMDD-NNN "任务标题" Zhongshu 中书省 中书令
 
-# 更新状态
-py %USERPROFILE%\.openclaw\workspace\scripts\kanban_update.py state ZYQ-xxx Zhongshu "中书省已接旨"
+# 更新状态 (Windows)
+python3 ~/.openclaw/workspace/scripts/kanban_update.py state ZYQ-xxx Zhongshu "中书省已接旨"
+# 更新状态 (macOS/Linux)
+python3 ~/.openclaw/workspace/scripts/kanban_update.py state ZYQ-xxx Zhongshu "中书省已接旨"
 
-# 添加流转
-py %USERPROFILE%\.openclaw\workspace\scripts\kanban_update.py flow ZYQ-xxx "皇上" "中书省" "圣旨下发"
+# 添加流转 (Windows)
+python3 ~/.openclaw/workspace/scripts/kanban_update.py flow ZYQ-xxx "皇上" "中书省" "圣旨下发"
+# 添加流转 (macOS/Linux)
+python3 ~/.openclaw/workspace/scripts/kanban_update.py flow ZYQ-xxx "皇上" "中书省" "圣旨下发"
 
-# 完成任务
-py %USERPROFILE%\.openclaw\workspace\scripts\kanban_update.py done ZYQ-xxx "<产出>" "<摘要>"
+# 完成任务 (Windows)
+python3 ~/.openclaw/workspace/scripts/kanban_update.py done ZYQ-xxx "<产出>" "<摘要>"
+# 完成任务 (macOS/Linux)
+python3 ~/.openclaw/workspace/scripts/kanban_update.py done ZYQ-xxx "<产出>" "<摘要>"
 ```
 
 ## 语气

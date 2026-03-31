@@ -1,35 +1,10 @@
 ﻿{
-    "repo_dir":  {
-                     "Drive":  {
-                                   "CurrentLocation":  "code\\原始项目\\Tang-Political-System",
-                                   "Name":  "D",
-                                   "Provider":  "Microsoft.PowerShell.Core\\FileSystem",
-                                   "Root":  "D:\\",
-                                   "Description":  "Data",
-                                   "MaximumSize":  null,
-                                   "Credential":  "System.Management.Automation.PSCredential",
-                                   "DisplayRoot":  null
-                               },
-                     "Provider":  {
-                                      "ImplementingType":  "Microsoft.PowerShell.Commands.FileSystemProvider",
-                                      "HelpFile":  "System.Management.Automation.dll-Help.xml",
-                                      "Name":  "FileSystem",
-                                      "PSSnapIn":  "Microsoft.PowerShell.Core",
-                                      "ModuleName":  "Microsoft.PowerShell.Core",
-                                      "Module":  null,
-                                      "Description":  "",
-                                      "Capabilities":  52,
-                                      "Home":  "C:\\Users\\HUAWEI",
-                                      "Drives":  "C D"
-                                  },
-                     "ProviderPath":  "D:\\code\\原始项目\\Tang-Political-System",
-                     "Path":  "D:\\code\\原始项目\\Tang-Political-System"
-                 },
-    "openclaw_workspace":  "C:\\Users\\HUAWEI\\.openclaw\\workspace",
-    "tasks_file":  "D:\\code\\原始项目\\Tang-Political-System\\data\\tasks_source.json",
-    "openclaw_home":  "C:\\Users\\HUAWEI\\.openclaw",
-    "version":  "1.0.0",
-    "install_date":  "2026-03-17",
-    "kanban_script":  "C:\\Users\\HUAWEI\\.openclaw\\workspace\\scripts\\kanban_update.py",
-    "refresh_script":  "D:\\code\\原始项目\\Tang-Political-System\\scripts\\refresh_live_data.py"
+    "repo_dir": "${PROJECT_ROOT}",
+    "openclaw_workspace": "${HOME}/.openclaw/workspace",
+    "tasks_file": "${PROJECT_ROOT}/data/tasks_source.json",
+    "openclaw_home": "${HOME}/.openclaw",
+    "version": "1.0.0",
+    "install_date": "2026-03-17",
+    "kanban_script": "${PROJECT_ROOT}/scripts/kanban_update.py",
+    "refresh_script": "${PROJECT_ROOT}/scripts/refresh_live_data.py"
 }

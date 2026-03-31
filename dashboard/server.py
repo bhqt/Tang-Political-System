@@ -523,6 +523,84 @@ def push_to_feishu():
         print(f'[飞书] 推送失败: {e}', file=sys.stderr)
 
 
+def push_to_weixin():
+    """Push morning brief to Weixin AI."""
+    import subprocess
+    cfg = read_json(DATA / 'morning_brief_config.json', {})
+    if not cfg:
+        log.warning('❌ 天下要闻配置未找到')
+        return False
+    brief = read_json(DATA / 'morning_brief.json', {})
+    date_str = brief.get('date', '')
+    total = sum(len(v) for v in (brief.get('categories') or {}).values())
+    if not total:
+        log.warning('⚠️ 今日暂无要闻数据，请先点击「立即采集」按钮')
+        return False
+    cat_lines = []
+    for cat, items in (brief.get('categories') or {}).items():
+        if items:
+            cat_lines.append(f'  {cat}: {len(items)} 条')
+    summary = '\n'.join(cat_lines)
+    date_fmt = date_str[:4] + '年' + date_str[4:6] + '月' + date_str[6:] + '日' if len(date_str) == 8 else date_str
+    message = f'''📰 天下要闻 · {date_fmt}
+共 **{total}** 条要闻已更新
+{summary}
+
+🔗 查看完整简报: http://127.0.0.1:7891
+
+采集于 {brief.get('generated_at', '')}'''
+    try:
+        result = subprocess.run(
+            ['openclaw', 'message', 'send',
+             '--channel', 'openclaw-weixin',
+             '--target', 'o9cq802KkVl3OKboQH--12ttmTag@im.wechat',
+             '--message', message],
+            capture_output=True,
+            text=True,
+            timeout=30
+        )
+        if result.returncode == 0:
+            print(f'[微信] 推送成功!')
+            return True
+        else:
+            print(f'[微信] 推送失败: {result.stderr}', file=sys.stderr)
+            return False
+    except FileNotFoundError:
+        print(f'[微信] 推送失败: openclaw 命令未找到', file=sys.stderr)
+        return False
+    except Exception as e:
+        print(f'[微信] 推送失败: {e}', file=sys.stderr)
+        return False
+
+
+def handle_feishu_webhook(data):
+    """Handle Feishu webhook messages."""
+    try:
+        # 解析飞书消息
+        msg_type = data.get('msg_type')
+        if msg_type == 'text':
+            content = data.get('content', {})
+            text = content.get('text', '').strip()
+            if not text:
+                return {'ok': False, 'error': 'Empty message'}
+            
+            # 创建任务
+            result = handle_create_task(text, org='中书省', official='中书令')
+            if result.get('ok'):
+                return {
+                    'ok': True,
+                    'message': f'旨意已接收，任务 ID: {result.get("taskId")}',
+                    'taskId': result.get('taskId')
+                }
+            else:
+                return result
+        else:
+            return {'ok': False, 'error': f'Unsupported message type: {msg_type}'}
+    except Exception as e:
+        log.error(f'飞书 Webhook 处理失败: {e}')
+        return {'ok': False, 'error': str(e)}
+
+
 # 旨意标题最低要求
 _MIN_TITLE_LEN = 10
 _JUNK_TITLES = {
@@ -2314,6 +2392,7 @@ class Handler(BaseHTTPRequestHandler):
                         cmd.append('--force')
                     subprocess.run(cmd, timeout=120)
                     push_to_feishu()
+                    push_to_weixin()
                 except Exception as e:
                     print(f'[refresh error] {e}', file=sys.stderr)
             threading.Thread(target=do_refresh, daemon=True).start()
@@ -2455,6 +2534,12 @@ class Handler(BaseHTTPRequestHandler):
                 self.send_json({'ok': False, 'error': 'agentId required'}, 400)
                 return
             result = wake_agent(agent_id, message)
+            self.send_json(result)
+            return
+
+        if p == '/api/feishu/webhook':
+            # 处理飞书 Webhook 消息
+            result = handle_feishu_webhook(body)
             self.send_json(result)
             return
 
