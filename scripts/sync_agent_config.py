@@ -43,6 +43,7 @@ KNOWN_MODELS = [
     {'id': 'copilot/gpt-4o',              'label': 'GPT-4o',            'provider': 'Copilot'},
     {'id': 'copilot/gemini-2.5-pro',      'label': 'Gemini 2.5 Pro',    'provider': 'Copilot'},
     {'id': 'copilot/o3-mini',             'label': 'o3-mini',           'provider': 'Copilot'},
+    {'id': 'minimax/m2.5',                'label': 'MiniMax M2.5',      'provider': 'Minimax'},
 ]
 
 def normalize_model(model_value, fallback='unknown'):
